@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.btn_minus = new System.Windows.Forms.Button();
             this.btn_plus = new System.Windows.Forms.Button();
             this.btn_clearTimeLog = new System.Windows.Forms.Button();
@@ -42,19 +41,15 @@
             this.btn_Subtract = new System.Windows.Forms.Button();
             this.btn_Add = new System.Windows.Forms.Button();
             this.txt_Mynum = new System.Windows.Forms.TextBox();
-            this.txt_numres2 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.txt_numres1 = new System.Windows.Forms.TextBox();
-            this.txt_num2 = new System.Windows.Forms.TextBox();
-            this.txt_num1 = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.txt_timetmp = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.txt_timetmp);
             this.panel1.Controls.Add(this.btn_minus);
             this.panel1.Controls.Add(this.btn_plus);
             this.panel1.Controls.Add(this.btn_clearTimeLog);
@@ -65,26 +60,10 @@
             this.panel1.Controls.Add(this.btn_Subtract);
             this.panel1.Controls.Add(this.btn_Add);
             this.panel1.Controls.Add(this.txt_Mynum);
-            this.panel1.Controls.Add(this.txt_numres2);
-            this.panel1.Controls.Add(this.textBox2);
-            this.panel1.Controls.Add(this.txt_numres1);
-            this.panel1.Controls.Add(this.txt_num2);
-            this.panel1.Controls.Add(this.txt_num1);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(279, 177);
+            this.panel1.Size = new System.Drawing.Size(296, 177);
             this.panel1.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Location = new System.Drawing.Point(78, 47);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(10, 13);
-            this.label1.TabIndex = 19;
-            this.label1.Text = ":";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btn_minus
             // 
@@ -117,7 +96,7 @@
             this.btn_clearTimeLog.BackColor = System.Drawing.Color.LightCyan;
             this.btn_clearTimeLog.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btn_clearTimeLog.ForeColor = System.Drawing.Color.Teal;
-            this.btn_clearTimeLog.Location = new System.Drawing.Point(236, 13);
+            this.btn_clearTimeLog.Location = new System.Drawing.Point(253, 13);
             this.btn_clearTimeLog.Name = "btn_clearTimeLog";
             this.btn_clearTimeLog.Size = new System.Drawing.Size(40, 20);
             this.btn_clearTimeLog.TabIndex = 16;
@@ -134,7 +113,7 @@
             this.txt_Timelog.Name = "txt_Timelog";
             this.txt_Timelog.ReadOnly = true;
             this.txt_Timelog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txt_Timelog.Size = new System.Drawing.Size(134, 131);
+            this.txt_Timelog.Size = new System.Drawing.Size(151, 131);
             this.txt_Timelog.TabIndex = 15;
             this.txt_Timelog.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -157,7 +136,7 @@
             this.btn_copy.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btn_copy.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_copy.ForeColor = System.Drawing.Color.Teal;
-            this.btn_copy.Location = new System.Drawing.Point(183, 13);
+            this.btn_copy.Location = new System.Drawing.Point(200, 13);
             this.btn_copy.Name = "btn_copy";
             this.btn_copy.Size = new System.Drawing.Size(47, 20);
             this.btn_copy.TabIndex = 11;
@@ -172,7 +151,7 @@
             this.txt_Result.Location = new System.Drawing.Point(6, 14);
             this.txt_Result.Name = "txt_Result";
             this.txt_Result.ReadOnly = true;
-            this.txt_Result.Size = new System.Drawing.Size(171, 20);
+            this.txt_Result.Size = new System.Drawing.Size(188, 20);
             this.txt_Result.TabIndex = 10;
             this.txt_Result.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -212,65 +191,26 @@
             this.txt_Mynum.TabIndex = 2;
             this.txt_Mynum.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // txt_numres2
-            // 
-            this.txt_numres2.Location = new System.Drawing.Point(6, 106);
-            this.txt_numres2.Name = "txt_numres2";
-            this.txt_numres2.Size = new System.Drawing.Size(26, 20);
-            this.txt_numres2.TabIndex = 5;
-            this.txt_numres2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txt_numres2.Visible = false;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(6, 80);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(10, 20);
-            this.textBox2.TabIndex = 6;
-            this.textBox2.Text = ":";
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBox2.Visible = false;
-            // 
-            // txt_numres1
-            // 
-            this.txt_numres1.Location = new System.Drawing.Point(6, 54);
-            this.txt_numres1.Name = "txt_numres1";
-            this.txt_numres1.Size = new System.Drawing.Size(25, 20);
-            this.txt_numres1.TabIndex = 4;
-            this.txt_numres1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txt_numres1.Visible = false;
-            // 
-            // txt_num2
-            // 
-            this.txt_num2.BackColor = System.Drawing.Color.LightCyan;
-            this.txt_num2.ForeColor = System.Drawing.Color.Teal;
-            this.txt_num2.Location = new System.Drawing.Point(94, 44);
-            this.txt_num2.Name = "txt_num2";
-            this.txt_num2.Size = new System.Drawing.Size(26, 20);
-            this.txt_num2.TabIndex = 1;
-            this.txt_num2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // txt_num1
-            // 
-            this.txt_num1.BackColor = System.Drawing.Color.LightCyan;
-            this.txt_num1.ForeColor = System.Drawing.Color.Teal;
-            this.txt_num1.Location = new System.Drawing.Point(47, 43);
-            this.txt_num1.Name = "txt_num1";
-            this.txt_num1.Size = new System.Drawing.Size(25, 20);
-            this.txt_num1.TabIndex = 0;
-            this.txt_num1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // timer1
             // 
             this.timer1.Enabled = true;
+            // 
+            // txt_timetmp
+            // 
+            this.txt_timetmp.BackColor = System.Drawing.Color.LightCyan;
+            this.txt_timetmp.ForeColor = System.Drawing.Color.Teal;
+            this.txt_timetmp.Location = new System.Drawing.Point(37, 46);
+            this.txt_timetmp.Name = "txt_timetmp";
+            this.txt_timetmp.Size = new System.Drawing.Size(94, 20);
+            this.txt_timetmp.TabIndex = 20;
+            this.txt_timetmp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(304, 204);
+            this.ClientSize = new System.Drawing.Size(320, 204);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
@@ -289,11 +229,6 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox txt_numres2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox txt_numres1;
-        private System.Windows.Forms.TextBox txt_num2;
-        private System.Windows.Forms.TextBox txt_num1;
         private System.Windows.Forms.TextBox txt_Mynum;
         private System.Windows.Forms.Button btn_Add;
         private System.Windows.Forms.Button btn_Subtract;
@@ -305,7 +240,7 @@
         private System.Windows.Forms.Button btn_clearTimeLog;
         private System.Windows.Forms.Button btn_minus;
         private System.Windows.Forms.Button btn_plus;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txt_timetmp;
     }
 }
 

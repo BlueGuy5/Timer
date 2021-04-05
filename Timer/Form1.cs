@@ -22,11 +22,17 @@ namespace Timer
         public Form1()
         {
             InitializeComponent();
-            KeyDown += new KeyEventHandler(tabover);
             timer1.Tick += new EventHandler(TimerTick);
             timer1.Interval = 1000;
             timer1.Start();
         }
+        public struct time_struct
+        {
+            public string hour { get; set; }
+            public string min { get; set; }
+            public string sec { get; set; }
+        }
+        time_struct save_time = new time_struct();
         public void Set_window_to_forground()
         {
             var prc = Process.GetProcessesByName("Timer");
@@ -40,55 +46,56 @@ namespace Timer
         bool showbox = true;
         private void TimerTick(object sender, EventArgs e)
         {
-            //txt_Result.Text = txt_Result.Text.Replace(" (" + txt_Mynum.Text + ")","") + " (" + txt_Mynum.Text + ")";
             btn_time.Text = DateTime.Now.ToString("hh:mm:ss");
-            string TimesUp = txt_numres1.Text + ":" + txt_numres2.Text;
-            if(btn_time.Text.Substring(6,2) == "00")
+            string TimesUp = save_time.hour + ":" + save_time.min + ":" + save_time.sec;
+            try
             {
-                txt_Result.Text = txt_Result.Text.Substring(0, 13);
-                countdown--;
-                txt_Result.Text = txt_Result.Text + " (+" + countdown + ")";
-            }
-            if(btn_time.Text.Substring(0,5) == TimesUp && showbox == true)
-            {
-                timer1.Stop();
-                Set_window_to_forground(); //Must be before msgbox or it will not work.
-                var msgbox = MessageBox.Show(btn_time.Text + " (" + txt_Mynum.Text + ")", "Times up!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                Set_window_to_forground(); //Not needed, but to make sure this get executed.
-                showbox = false;
-                //txt_debug.AppendText(DateTime.Now.ToString("hh:mm:ss" ) + "Timer Tick" + showbox.ToString() + "\r\n");
-                if (msgbox == DialogResult.OK)
+                if (btn_time.Text.Substring(6, 2) == txt_timetmp.Text.Substring(6, 2))
                 {
-                    timer1.Start();
+                    txt_Result.Text = txt_Result.Text.Substring(0, 19);
+                    countdown--;
+                    txt_Result.Text = txt_Result.Text + " (+" + countdown + ")";
                 }
+                if (btn_time.Text == TimesUp && showbox == true)
+                {
+                    timer1.Stop();
+                    Set_window_to_forground(); //Must be before msgbox or it will not work.
+                    var msgbox = MessageBox.Show(btn_time.Text + " (" + txt_Mynum.Text + ")", "Times up!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    Set_window_to_forground(); //Not needed, but to make sure this get executed.
+                    showbox = false;
+                    if (msgbox == DialogResult.OK)
+                    {
+                        timer1.Start();
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                //catch nothing
             }
         }
         private void Form1_Load(object sender, EventArgs e)
         {
             this.BackgroundImageLayout = ImageLayout.Stretch;
-            this.BackgroundImage = Image.FromFile(@"C:\Users\williamyu\Pictures\MyNotes_SetBG\time is power.jpg");
+            this.BackgroundImage = Image.FromFile(@"C:\Users\BlueGuy\Pictures\time is power.jpg");
             btn_time.Text = DateTime.Now.ToString("hh:mm:ss");
 
-            var splitTime = btn_time.Text.Split(':');
-            txt_num1.Text = splitTime[0].ToString();
-            txt_num2.Text = splitTime[1].ToString();
             txt_Mynum.Text = "0";
+            txt_timetmp.Text = "00:00:00"; //add to prevent error on open
         }
-        private void tabover(object sender, KeyEventArgs e)
-        {
-            if(e.KeyCode == Keys.Tab && txt_num1.Focused == true)
-            {
-                txt_num2.Text = string.Empty;
-            }
-            else if (e.KeyCode == Keys.Tab && txt_num2.Focused == true)
-            {
-                txt_Mynum.Text = string.Empty;
-            }
-        }
+
         private void btn_Add_Click(object sender, EventArgs e)
         {
-            int num1 = int.Parse(txt_num1.Text);
-            int num2 = int.Parse(txt_num2.Text);
+            var splitTime = txt_timetmp.Text.Split(':');
+
+            save_time.hour = splitTime[0];
+            save_time.min = splitTime[1];
+            save_time.sec = splitTime[2];
+
+            int num_hour = int.Parse(splitTime[0]);
+            int num_min = int.Parse(splitTime[1]);
+            int num_sec = int.Parse(splitTime[2]);
+
             int mynum = int.Parse(txt_Mynum.Text);
 
             if (mynum > 60)
@@ -97,28 +104,28 @@ namespace Timer
             }
             else
             {
-                if (num2 + mynum == 60)
+                if (num_min + mynum == 60)
                 {
-                    txt_numres1.Text = (num1 + 1).ToString("00");
-                    txt_numres2.Text = "00";
+                    save_time.hour = (num_hour + 1).ToString("00");
+                    save_time.min = "00";
                 }
-                else if (num2 + mynum > 60)
+                else if (num_min + mynum > 60)
                 {
-                    int minusnum = 60 - num2;
+                    int minusnum = 60 - num_min;
                     int remainder = mynum - minusnum;
-                    txt_numres1.Text = (num1 + 1).ToString("00");
-                    txt_numres2.Text = remainder.ToString("00");
+                    save_time.hour = (num_hour + 1).ToString("00");
+                    save_time.min = remainder.ToString("00");
                 }
                 else
                 {
-                    txt_numres1.Text = txt_num1.Text;
-                    txt_numres2.Text = (num2 + mynum).ToString("00");
+                    save_time.hour = num_hour.ToString("00");
+                    save_time.min = (num_min + mynum).ToString("00");
                 }
-                if (int.Parse(txt_numres1.Text) == 13)
+                if (int.Parse(save_time.hour) == 13)
                 {
-                    txt_numres1.Text = "1";
+                    save_time.hour = "1";
                 }
-                if (int.Parse(txt_num2.Text) <= int.Parse(btn_time.Text.Substring(3, 2)))
+                if (int.Parse(num_min.ToString()) <= int.Parse(btn_time.Text.Substring(3, 2)))
                 {
                     if (int.Parse(btn_time.Text.Substring(3, 2)) + int.Parse(txt_Mynum.Text) > 60)
                     {
@@ -128,15 +135,15 @@ namespace Timer
                     }
                     else
                     {
-                        countdown = int.Parse(txt_numres2.Text) - int.Parse(btn_time.Text.Substring(3, 2));
+                        countdown = int.Parse(save_time.min) - int.Parse(btn_time.Text.Substring(3, 2));
                     }
-                    txt_Result.Text = txt_num1.Text + ":" + txt_num2.Text + " - " + txt_numres1.Text + ":" + txt_numres2.Text + " (+" + countdown + ")";
-                    txt_Timelog.AppendText(txt_num1.Text + ":" + txt_num2.Text + " - " + txt_numres1.Text + ":" + txt_numres2.Text + " (+" + txt_Mynum.Text + ")" + "\r\n");
+                    txt_Result.Text = txt_timetmp.Text + " - " + save_time.hour + ":" + save_time.min + ":" + save_time.sec + " (+" + countdown + ")";
+                    txt_Timelog.AppendText(txt_timetmp.Text + " - " + save_time.hour + ":" + save_time.min + ":" + save_time.sec + " (+" + txt_Mynum.Text + ")" + "\r\n");
                 }
                 else
                 {
-                    txt_Result.Text = txt_num1.Text + ":" + txt_num2.Text + " - " + txt_numres1.Text + ":" + txt_numres2.Text + " (+" + txt_Mynum.Text + ")";
-                    txt_Timelog.AppendText(txt_Result.Text + "\r\n");
+                    txt_Result.Text = txt_timetmp.Text + " - " + save_time.hour + ":" + save_time.min + ":" + save_time.sec + " (+" + txt_Mynum.Text + ")";
+                    txt_Timelog.AppendText(txt_timetmp.Text + "\r\n");
                 }
                 showbox = true;
                 //txt_debug.AppendText(DateTime.Now.ToString("hh:mm:ss ") + "btn_Add_Click" + showbox.ToString() + "\r\n");
@@ -145,6 +152,7 @@ namespace Timer
 
         private void btn_Subtract_Click(object sender, EventArgs e)
         {
+            /*
             int num1 = int.Parse(txt_num1.Text);
             int num2 = int.Parse(txt_num2.Text);
             int mynum = int.Parse(txt_Mynum.Text);
@@ -181,6 +189,7 @@ namespace Timer
                 showbox = true;
                 //txt_debug.AppendText(DateTime.Now.ToString("hh:mm:ss ") + "btn_Subtract_Click" + showbox.ToString() + "\r\n");
             }
+            */
         }
 
         private void btn_copy_Click(object sender, EventArgs e)
@@ -189,9 +198,11 @@ namespace Timer
         }
         private void btn_time_Click(object sender, EventArgs e)
         {
+            txt_timetmp.Text = btn_time.Text;
             var splitTime = btn_time.Text.Split(':');
-            txt_num1.Text = splitTime[0].ToString();
-            txt_num2.Text = splitTime[1].ToString();
+            save_time.hour = splitTime[0];
+            save_time.min = splitTime[1];
+            save_time.sec = splitTime[2];   
         }
 
         private void btn_clearTimeLog_Click(object sender, EventArgs e)
